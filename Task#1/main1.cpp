@@ -11,12 +11,6 @@ struct str_task
     std::time_t end_task = 0;
 };
 
-void begin_task()
-{
-}
-void end_task()
-{
-}
 int main()
 {
     std::map<std::string, int> name_task;
