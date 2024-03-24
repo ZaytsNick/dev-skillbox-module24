@@ -49,7 +49,10 @@ int main()
                 if (tasks[i].end_task == 0)
                     std::cout << "Task in progress" << std::endl;
                 else
-                    std::cout << "End task: " << std::asctime(std::localtime(&tasks[i].end_task)) << std::endl;
+                {
+                    std::cout << "End task: " << std::asctime(std::localtime(&tasks[i].end_task));
+                    std::cout << "Time work task: " << tasks[i].end_task - tasks[i].start_task << " second" << std::endl;
+                }
             }
         }
     }
