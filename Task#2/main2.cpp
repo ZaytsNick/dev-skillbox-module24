@@ -29,20 +29,30 @@ int main()
         bd_date.push_back(tmp);
         bd_tm_local[tmp.birthday.tm_yday].push_back(bd_date.size() - 1);
     }
-
-    std::map<int, std::vector<int>>::iterator it = bd_tm_local.begin();
+    bd_tm_local[local.tm_yday].push_back(bd_date.size() + 1);
+    std::map<int, std::vector<int>>::iterator it = bd_tm_local.find(local.tm_yday);
     while (true)
     {
-        if (it->first > local.tm_yday)
+        bool check(false);
+        for (int i = 0; i < it->second.size(); i++)
         {
-            std::cout << "Next birthday is " << std::put_time(&bd_date[it->second[0]].birthday, "%m-%d") << ":" << std::endl;
-            for (int i = 0; i < it->second.size(); i++)
+            if (it->second[i] == bd_date.size() + 1)
+                continue;
+            else
             {
-                std::cout << bd_date[it->second[i]].name << std::endl;
+                std::cout << "Next birthday is " << std::put_time(&bd_date[it->second[i]].birthday, "%m-%d") << ":" << std::endl;
+                for (int i = 0; i < it->second.size(); i++)
+                {
+                    std::cout << bd_date[it->second[i]].name << std::endl;
+                }
+                check = true;
+                break;
             }
-            break;
         }
-        it=
+        if (check)
+            break;
+        else
+            it++;
     }
 }
 
