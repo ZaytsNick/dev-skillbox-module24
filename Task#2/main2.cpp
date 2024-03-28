@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <ctime>
 #include <iomanip>
@@ -21,14 +22,19 @@ int main()
     {
         std::cout << "Enter birthday date: ";
         // tmp.birthday
-        std::tm(tmp.birthday) = *std::localtime(&t);
         std::cin >> tmp.name;
         if (tmp.name == "end")
             break;
-        std::cin >> std::get_time(&tmp.birthday, "%Y-%m-%d");
+        std::cin >> std::get_time(&local, "%Y-%m-%d");
+        t = std::mktime(&local);
+        local = *std::localtime(&t);
+
+        tmp.birthday = local;
         bd_date.push_back(tmp);
         bd_tm_local[tmp.birthday.tm_yday].push_back(bd_date.size() - 1);
     }
+    t = std::time(nullptr);
+    local = *std::localtime(&t);
     bd_tm_local[local.tm_yday].push_back(bd_date.size() + 1);
     std::map<int, std::vector<int>>::iterator it = bd_tm_local.find(local.tm_yday);
     while (true)
@@ -65,5 +71,4 @@ Vlada 2003-05-28
 Anton 2001-11-22
 Pasha 2001-04-18
 Anny 2003-05-28
-end
-*/
+end*/
