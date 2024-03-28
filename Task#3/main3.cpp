@@ -17,13 +17,18 @@ int main()
     end_timer.tm_sec = (end_timer.tm_sec + temp.tm_sec) % 60;
     // temp = *std::localtime(&t);
     // std::tm start_timer = temp;
+
+    int second(0), minute(0);
     while ((temp.tm_min != end_timer.tm_min) || (temp.tm_sec != end_timer.tm_sec))
     {
         t = std::time(nullptr);
         temp = *std::localtime(&t);
-        int second = end_timer.tm_sec - temp.tm_sec < 0 ? end_timer.tm_sec - temp.tm_sec + 60 : end_timer.tm_sec - temp.tm_sec;
-        int minute = end_timer.tm_min - (end_timer.tm_sec - temp.tm_sec < 0 ? 1 : 0) - temp.tm_min;
-        std::cout << minute << ":" << second << std::endl;
+        if (second !=( end_timer.tm_sec - temp.tm_sec < 0 ? end_timer.tm_sec - temp.tm_sec + 60 : end_timer.tm_sec - temp.tm_sec)  || minute != (end_timer.tm_min - (end_timer.tm_sec - temp.tm_sec < 0 ? 1 : 0) - temp.tm_min))
+        {
+            second = end_timer.tm_sec - temp.tm_sec < 0 ? end_timer.tm_sec - temp.tm_sec + 60 : end_timer.tm_sec - temp.tm_sec;
+            minute = end_timer.tm_min - (end_timer.tm_sec - temp.tm_sec < 0 ? 1 : 0) - temp.tm_min;
+            std::cout << minute << ":" << second << std::endl;
+        }
     }
     // std::cout << std::put_time(&end_timer, "%M:%S") << " " << std::put_time(&start_timer, "%M:%S");
     std::cout << "DING! DING! DING!";
